@@ -1,5 +1,5 @@
 const privateMessage = () => {
-  return 'Welcome to Vive Water order bot';
+  return 'Welcome to Vivi Water order bot';
 };
 
 module.exports = privateMessage;
