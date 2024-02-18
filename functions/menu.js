@@ -4,7 +4,7 @@ const menu = (language) => {
         Hello, Thankyou for reaching out to Vivi Waters, 
     Kindly select which Product you want to Order. For Ordering simply input the  
     
-    <Product Number> <Quantity> 
+    Product Number :
     
     1) ViVi Drop – 200ml 
     Was SAR 16.10 Now SAR 11.50 
@@ -57,9 +57,7 @@ const menu = (language) => {
 
 يرجى اختيار المنتج الذي تريد طلبه. للطلب ببساطة قم بإدخال 
 
-
-<رقم المنتج> 
-
+رقم المنتج
   
 1) فيفي دروب – 200 مل 
 
