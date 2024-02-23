@@ -35,12 +35,11 @@ exports.handler = async function (context, event, callback) {
   }
 
 
-
   const twiml = new Twilio.twiml.MessagingResponse();
   const user_message = event.Body.toLowerCase();
   //await refreshCart(session);
   
-  if (user_message == "hello" && session.state == "start") {
+  if (user_message && session.state == "start") {
     twiml.message(
       `مرحبا شكراً لتواصلك مع مياه "ڤي ڤي" يسعدنا خدمتك 
 
@@ -111,7 +110,6 @@ exports.handler = async function (context, event, callback) {
   else if(session.state == "quantity_state" && session.language == "en"){
     const quantity = user_message;
     await updateQuantity(session, quantity);
-    //showCart(session);
     twiml.message(formatCart(session.cart));
     twiml.message(`Do you want to remove item ${session.cart.length} from your cart?\n(Press D to remove)\nWould you like to add anything else?\n(Press Y)\nConfirm order? (Press C)`)
   }
