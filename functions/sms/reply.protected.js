@@ -43,9 +43,7 @@ exports.handler = async function (context, event, callback) {
     twiml.message(
       `مرحبا شكراً لتواصلك مع مياه "ڤي ڤي" يسعدنا خدمتك 
 
-      Hi there! 
-      
-      Thank you for contacting ViVi Waters. We are committed to providing the best bottled drinking water in terms of quality, service, and sustainability. 
+      Hello There, Thankyou For Choosing ViVi Waters!\nWe are committed to providing the best bottled drinking water in terms of quality, service, and sustainability. 
       
       Type "en" to Order in English 
       
@@ -54,7 +52,7 @@ exports.handler = async function (context, event, callback) {
     await updateSessionState(session, "language_selection");
   } 
   
-  else if ((session.state == "language_selection" && user_message == "en") || (session.state == "language_selection" && user_message == "ar")) {
+  else if ((session.state == "language_selection" && user_message == "en")) {
     await updateSessionLanguage(session, user_message);
     twiml.message(menu(user_message));
     await updateSessionState(session, "order_state");
@@ -65,7 +63,7 @@ exports.handler = async function (context, event, callback) {
     console.log(menu_eng(order_number));
     await addProductToCart(session, menu_eng(order_number));
     await updateSessionState(session, "quantity_state");
-    twiml.message("Please enter quantity.");
+    twiml.message("Please Enter Quantity.");
   }
 
   else if(session.state == "quantity_state" && session.language == "en" && user_message == "y"){
@@ -76,13 +74,13 @@ exports.handler = async function (context, event, callback) {
   else if(session.state == "quantity_state" && session.language == "en" && user_message == "d"){
     await removeProduct(session);
     twiml.message(formatCart(session.cart));
-    twiml.message(`Do you want to remove item ${session.cart.length} from your cart?\n(Press D to remove)\nWould you like to add anything else?(Press Y)\nConfirm order? (Press C)`)
+    twiml.message(`Do You Want To Remove Item ${session.cart.length} From Your Cart?\n( Press D )\nWould You Like To Add Anything Else?\n( Press Y )\nConfirm Order?\n( Press C )`)
   }
 
   else if(session.state == "quantity_state" && session.language == "en" && user_message == "c"){
     //prompt to enter name
     //change state to enter name
-   twiml.message("Please enter your full name.");
+   twiml.message("Please Enter Your Full Name.");
    await updateSessionState(session, "enter_name");
   }
 
@@ -90,7 +88,7 @@ exports.handler = async function (context, event, callback) {
     //update name in db
     await updateName(session, user_message)
     //prompt for address 
-    twiml.message("Please enter your address, or address link.");
+    twiml.message("Please Enter Your Address or Address Link.");
     //change state to enter address
     await updateSessionState(session, "enter_address");
 
@@ -102,7 +100,7 @@ exports.handler = async function (context, event, callback) {
     //show bill 
     twiml.message(showBill(session, session.cart));
     //thankyou message 
-    twiml.message("Thank you for shopping with ViVi Water! Your order will be delivered soon.");
+    twiml.message('Thankyou for Shopping with ViVi Waters!\nYour Order Will Be Delivered Soon. \n شكرًا لك على التسوق مع مياه فيفي\n! سيتم تسليم طلبك قريبا.');
     //change state to start
     await updateSessionState(session, "start");
   }
@@ -111,12 +109,12 @@ exports.handler = async function (context, event, callback) {
     const quantity = user_message;
     await updateQuantity(session, quantity);
     twiml.message(formatCart(session.cart));
-    twiml.message(`Do you want to remove item ${session.cart.length} from your cart?\n(Press D to remove)\nWould you like to add anything else?\n(Press Y)\nConfirm order? (Press C)`)
+    twiml.message(`Do You Want To Remove Item ${session.cart.length} From Your Cart?\n( Press D )\nWould You Like To Add Anything Else?\n( Press Y )\nConfirm Order?\n( Press C )`)
   }
 
   else {
     twiml.message(
-      "Sorry I could not understand that, please enter the correct option."
+      "Sorry I couldn't understand that, Please enter a valid response."
     );
   }
 
