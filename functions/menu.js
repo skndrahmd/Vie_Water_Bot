@@ -1,5 +1,5 @@
 const menu = (language) => {
-  if (language == "1") {
+  if (language == "en") {
     return `
         Hello, Thankyou for reaching out to Vivi Waters, 
     Kindly select which Product you want to Order. For Ordering simply input the  
@@ -51,7 +51,7 @@ const menu = (language) => {
     Shrink – 6 Pcs 
     Buy 10 Get 4 Free
         `;
-  } else if (language == "2") {
+  } else if (language == "ar") {
     return `
         مرحبًا، شكرًا لتواصلك مع فيفي ووترز، 
 
@@ -148,7 +148,7 @@ const menu = (language) => {
 اشتري 10 واحصل على 4 مجانًا
         `;
   } else {
-    return "Please enter 1 for English and 2 for Arabic";
+    return "Please enter 'en' for English and 'ar' for Arabic";
   }
 };
 
