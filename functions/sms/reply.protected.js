@@ -37,7 +37,6 @@ exports.handler = async function (context, event, callback) {
 
   const twiml = new Twilio.twiml.MessagingResponse();
   const user_message = event.Body.toLowerCase();
-  //await refreshCart(session);
   
   if (user_message && session.state == "start") {
     twiml.message(
@@ -102,6 +101,7 @@ exports.handler = async function (context, event, callback) {
     //thankyou message 
     twiml.message('Thankyou for Shopping with ViVi Waters!\nYour Order Will Be Delivered Soon. \n شكرًا لك على التسوق مع مياه فيفي\n! سيتم تسليم طلبك قريبا.');
     //change state to start
+    await refreshCart(session);
     await updateSessionState(session, "start");
   }
 
