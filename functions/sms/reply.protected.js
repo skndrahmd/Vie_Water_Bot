@@ -5,13 +5,14 @@ const updateSessionState = require("../updateSessionState");
 const addProductToCart = require("../addProductToCart");
 const Session = require("../model");
 const connectToDb = require("../connectToDB");
-const refreshCart = require("../refreshCart");
+//const refreshCart = require("../refreshCart");
 const formatCart = require("../formatCart");
 const updateQuantity = require("../updateQuantity");
 const showBill = require("../showBill");
 const removeProduct = require("../removeProduct");
 const updateName = require("../updateName");
 const updateAddress = require("../updateAddress");
+const deleteCurrentSession = require("../deleteCurrentSession");
 
 connectToDb();
 
@@ -100,10 +101,10 @@ exports.handler = async function (context, event, callback) {
     twiml.message(showBill(session, session.cart));
     //thankyou message 
     twiml.message('Thankyou for Shopping with ViVi Waters!\nYour Order Will Be Delivered Soon. \n شكرًا لك على التسوق مع مياه فيفي\n! سيتم تسليم طلبك قريبا.');
+    //transfer data from mongo db to SAP
+    //============//==========================//=================//
     //delete current session
-    
-    await refreshCart(session);
-    await updateSessionState(session, "start");
+    await deleteCurrentSession(session._id);
   }
 
   else if(session.state == "quantity_state" && session.language == "en"){
