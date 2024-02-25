@@ -100,7 +100,8 @@ exports.handler = async function (context, event, callback) {
     twiml.message(showBill(session, session.cart));
     //thankyou message 
     twiml.message('Thankyou for Shopping with ViVi Waters!\nYour Order Will Be Delivered Soon. \n شكرًا لك على التسوق مع مياه فيفي\n! سيتم تسليم طلبك قريبا.');
-    //change state to start
+    //delete current session
+    
     await refreshCart(session);
     await updateSessionState(session, "start");
   }
