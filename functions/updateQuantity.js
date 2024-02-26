@@ -1,3 +1,4 @@
+
 const updateQuantity = async (session, quantity) => {
     try {
         // Update session language
@@ -6,8 +7,10 @@ const updateQuantity = async (session, quantity) => {
         // Save session to MongoDB
         await session.save();
         console.log(`quantity updated successfully`);
+        return true;
       } catch (err) {
-        console.log("Error updating quantity", err);
+        console.log(err);
+        return false;
       }
 }
 

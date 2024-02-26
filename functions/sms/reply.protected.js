@@ -60,10 +60,17 @@ exports.handler = async function (context, event, callback) {
   
   else if (session.state == "order_state" && session.language == "en") {
     const order_number = user_message;
-    console.log(menu_eng(order_number));
-    await addProductToCart(session, menu_eng(order_number));
-    await updateSessionState(session, "quantity_state");
-    twiml.message("Please Enter Quantity.");
+    if (order_number >= 1 && order_number <= 9){
+      
+      console.log(menu_eng(order_number));
+      await addProductToCart(session, menu_eng(order_number));
+      await updateSessionState(session, "quantity_state");
+      twiml.message("Please Enter Quantity.");
+
+    }else {
+      twiml.message("Please enter a valid product number from the given menu. (1-9)")
+    }
+   
   }
 
   else if(session.state == "quantity_state" && session.language == "en" && user_message == "y"){
@@ -109,9 +116,15 @@ exports.handler = async function (context, event, callback) {
 
   else if(session.state == "quantity_state" && session.language == "en"){
     const quantity = user_message;
-    await updateQuantity(session, quantity);
-    twiml.message(formatCart(session.cart));
-    twiml.message(`Do You Want To Remove Item ${session.cart.length} From Your Cart?\n( Press D )\nWould You Like To Add Anything Else?\n( Press Y )\nConfirm Order?\n( Press C )`)
+    if(await updateQuantity(session, quantity)){
+      await updateQuantity(session, quantity);
+      twiml.message(formatCart(session.cart));
+      twiml.message(`Do You Want To Remove Item ${session.cart.length} From Your Cart?\n( Press D )\nWould You Like To Add Anything Else?\n( Press Y )\nConfirm Order?\n( Press C )`)
+    }else {
+      twiml.message("Please enter a valid number for the quantity.")
+    }
+    
+   
   }
 
   else {
