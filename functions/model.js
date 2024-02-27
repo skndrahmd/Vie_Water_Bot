@@ -21,6 +21,7 @@ const sessionSchema = new mongoose.Schema({
     },
   ],
   total_bill: Number,
+  registered_User: Boolean
 });
 
 // Set total_price to price x quantity on save

@@ -5,7 +5,6 @@ const updateSessionState = require("../updateSessionState");
 const addProductToCart = require("../addProductToCart");
 const Session = require("../model");
 const connectToDb = require("../connectToDB");
-//const refreshCart = require("../refreshCart");
 const formatCart = require("../formatCart");
 const updateQuantity = require("../updateQuantity");
 const showBill = require("../showBill");
@@ -13,23 +12,41 @@ const removeProduct = require("../removeProduct");
 const updateName = require("../updateName");
 const updateAddress = require("../updateAddress");
 const deleteCurrentSession = require("../deleteCurrentSession");
+const isUserRegistered = require("../isUserRegistered");
 
 connectToDb();
 
-
 exports.handler = async function (context, event, callback) {
+
+  //add new user as registered user in registered users db in the end
+
   let session = await Session.findOne({
     phoneNumber: event.From,
   });
 
-  if (!session) {
-    console.log("Session not found, making new one!");
+  let registeredUser = isUserRegistered(event.From);
+
+  if(registeredUser && !session){
     session = new Session({
       phoneNumber: event.From,
       state: "start",
       language: "",
       cart: [],
       total_bill: 0,
+      registered_User: true,
+    });
+
+    await session.save();
+
+  }
+  else if(!registeredUser && !session) {
+    session = new Session({
+      phoneNumber: event.From,
+      state: "start",
+      language: "",
+      cart: [],
+      total_bill: 0,
+      registered_User: false,
     });
 
     await session.save();
@@ -61,7 +78,7 @@ exports.handler = async function (context, event, callback) {
   else if (session.state == "order_state" && session.language == "en") {
     const order_number = user_message;
     if (order_number >= 1 && order_number <= 9){
-      
+
       console.log(menu_eng(order_number));
       await addProductToCart(session, menu_eng(order_number));
       await updateSessionState(session, "quantity_state");
