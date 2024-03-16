@@ -7,6 +7,7 @@ const sessionSchema = new mongoose.Schema({
   language: String,
   name: String, 
   address: String,
+  delivery_date: String,
   cart: [
     {
       item: String,
