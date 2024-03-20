@@ -8,6 +8,7 @@ const sessionSchema = new mongoose.Schema({
   name: String, 
   address: String,
   delivery_date: String,
+  time_zone: String,
   cart: [
     {
       item: String,
@@ -22,7 +23,11 @@ const sessionSchema = new mongoose.Schema({
     },
   ],
   total_bill: Number,
-  registered_User: Boolean
+  registered_User: Boolean,
+  alternate_contact: {
+    name: String,
+    phoneNumber: String,
+  }
 });
 
 // Set total_price to price x quantity on save
@@ -34,7 +39,15 @@ sessionSchema.pre("save", function (next) {
   this.cart.forEach((item) => {
     this.total_bill += item.total_price;
   })
+  
+   // Check if total_bill is greater than 20,000
+   if (this.total_bill > 20000) {
+    const error = new Error("Total bill exceeds the limit of 20,000 SAR.");
+    return next(error); // Pass the error to the next middleware
+  }
+
   next();
+
 });
 
 const Session = mongoose.model("Session", sessionSchema);
