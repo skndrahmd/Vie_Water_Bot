@@ -19,6 +19,7 @@ const updateDeliveryDate = require("../updateDeliveryDate");
 const selectTimeZone = require("../selectTimeZone");
 const addAlternateContactName = require("../addAlternateContactName");
 const addAlternateContactNumber = require("../addAlternateContactNumber");
+const getAddressFromCoordinates = require("../getAddressFromCoordinates");
 
 connectToDb();
 
@@ -166,6 +167,7 @@ exports.handler = async function (context, event, callback) {
       const latitude = event.Latitude;
       const longitude = event.Longitude;
       console.log(latitude + " " + longitude);
+      console.log(await getAddressFromCoordinates(latitude, longitude));
       await updateAddress(session, latitude + ", " + longitude);
       await updateSessionState(session, "delivery_date");
       twiml.message(
@@ -186,8 +188,6 @@ exports.handler = async function (context, event, callback) {
       twiml.message(
         `Please select the time zone for your order.\n1: 08:00 AM to 02:00 PM\n2: 04:00 PM to 09:00 PM`
       );
-
-    
     }
     
 
