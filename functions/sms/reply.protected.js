@@ -200,7 +200,7 @@ exports.handler = async function (context, event, callback) {
 
       
       await updateSessionState(session, "alternate_contact");
-      twiml.message("Would you like to provide an alternate contact?\n(Y/N)");
+      twiml.message("Do you want to add an Alternative “Contact Person”?\n(Y/N)");
 
       }
       else {
