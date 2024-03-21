@@ -155,7 +155,7 @@ exports.handler = async function (context, event, callback) {
       //update name in db
       await updateName(session, user_message);
       //prompt for address
-      twiml.message("Please Enter Your Address or Address Link.");
+      twiml.message("Please insert your pin location.");
       //change state to enter address
       await updateSessionState(session, "enter_address");
     }
@@ -186,7 +186,7 @@ exports.handler = async function (context, event, callback) {
       );
     }
 
-    
+
 
     //if no...
     else if(session.state == "confirm_address" && session.language == "en" && user_message == "n"){

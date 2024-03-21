@@ -14,7 +14,7 @@ Requested Delivery Date add total 5 days - Done
 
 Time Zone Message - Done
 
-Once Pin Location Sent –> Show text address and ask for confirmation (scenario applicable when user must add additional address otherwise use from master data) –> and lastly show user address in the final order - Pending
+Once Pin Location Sent –> Show text address and ask for confirmation (scenario applicable when user must add additional address otherwise use from master data) –> and lastly show user address in the final order - Done
 
 - Make an address object in the model. - done
 
