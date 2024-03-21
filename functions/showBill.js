@@ -1,8 +1,10 @@
 const formatCart = require("./formatCart");
+const getAddressFromCoordinates = require("./getAddressFromCoordinates");
+
 function showBill(session) {
   const order_id = session._id;
   const customerName = session.name;
-  const customerAddress = session.address;
+  const customerAddress = session.address["location"];
   const delivery_date = session.delivery_date;
   const time_zone = session.time_zone;
   const alternateName = session.alternate_contact["name"] || "N/A";

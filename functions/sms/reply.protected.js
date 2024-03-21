@@ -166,18 +166,35 @@ exports.handler = async function (context, event, callback) {
       //update address in db
       const latitude = event.Latitude;
       const longitude = event.Longitude;
+      const location = await getAddressFromCoordinates(latitude, longitude);
+
       console.log(latitude + " " + longitude);
       console.log(await getAddressFromCoordinates(latitude, longitude));
-      await updateAddress(session, latitude + ", " + longitude);
+
+      await updateAddress(session, latitude, longitude, location);
+      twiml.message(`Is this address confirmed? :\n${location}\n(Y/N)`)
+      await updateSessionState(session, "confirm_address");
+    }
+    
+
+    //confirm address logic
+    //if yes...
+    else if(session.state == "confirm_address" && session.language == "en" && user_message == "y"){
       await updateSessionState(session, "delivery_date");
       twiml.message(
         `Please select when you would like to get your order delivered. Enter the number of the corresponding date.(1-5)\n${datesOutput}`
       );
     }
+
     
-    //confirm address
-    //if yes...
+
     //if no...
+    else if(session.state == "confirm_address" && session.language == "en" && user_message == "n"){
+      twiml.message("Please insert your pin location again.")
+      await updateSessionState(session, "enter_address")
+    }
+
+  
     
     
     else if (session.state == "delivery_date" && session.language == "en") {

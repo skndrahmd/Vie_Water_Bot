@@ -1,10 +1,12 @@
-const updateAddress = async (session, address) => {
+const updateAddress = async (session, lat, long, location) => {
 
     try{
-        session.address = address;
+        session.address["lat"] = lat;
+        session.address["long"]= long;
+        session.address["location"] = location;
 
         await session.save();
-        console.log("Address updated successfully")
+        console.log("Address coordinates updated successfully")
 
     }
     catch {

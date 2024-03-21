@@ -6,7 +6,11 @@ const sessionSchema = new mongoose.Schema({
   state: String,
   language: String,
   name: String, 
-  address: String,
+  address: {
+    lat: String, 
+    long: String,
+    location: String
+  },
   delivery_date: String,
   time_zone: String,
   cart: [
